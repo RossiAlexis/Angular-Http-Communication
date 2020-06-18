@@ -1,3 +1,4 @@
+import { DataService } from 'app/core/data.service';
 import { Component, OnInit } from '@angular/core';
 
 import { Reader } from "app/models/reader";
@@ -9,7 +10,7 @@ import { Reader } from "app/models/reader";
 })
 export class AddReaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() { }
 
@@ -17,7 +18,10 @@ export class AddReaderComponent implements OnInit {
     let newReader: Reader = <Reader>formValues;
     newReader.readerID = 0;
     console.log(newReader);
-    console.warn('Save new reader not yet implemented.');
+    this.dataService.addReader(newReader).subscribe(
+      (data: Reader) => console.log(data),
+      (err: any) => console.log(err)
+    )
   }
 
 }

@@ -18,22 +18,43 @@ export class DashboardComponent implements OnInit {
   mostPopularBook: Book;
 
   constructor(private dataService: DataService,
-              private title: Title) { }
-  
+    private title: Title) { }
+
   ngOnInit() {
-    this.allBooks = this.dataService.getAllBooks();
-    this.allReaders = this.dataService.getAllReaders();
+    this.dataService.getAllBooks().subscribe(
+      (data: Book[]) => this.allBooks = data,
+      (err: any) => console.log(err),
+      () => console.log('complete')
+    );
+    this.dataService.getAllReaders().subscribe(
+      (data: Reader[]) => this.allReaders = data
+    );
+
     this.mostPopularBook = this.dataService.mostPopularBook;
 
     this.title.setTitle(`Book Tracker`);
   }
 
   deleteBook(bookID: number): void {
-    console.warn(`Delete book not yet implemented (bookID: ${bookID}).`);
+    this.dataService.deleteBook(bookID).subscribe(
+      (data: void) => {
+        const index = this.allBooks.findIndex(book => book.bookID === bookID);
+        this.allBooks.splice(index, 1);
+      },
+      (err: any) => console.log(err)
+
+    )
   }
 
   deleteReader(readerID: number): void {
-    console.warn(`Delete reader not yet implemented (readerID: ${readerID}).`);
+    this.dataService.deleteReader(readerID).subscribe(
+      (data: void) => {
+        const index = this.allReaders.findIndex(reader => reader.readerID === readerID);
+        this.allReaders.splice(index, 1);
+      },
+      (err: any) => console.log(err)
+
+    )
   }
 
 }
