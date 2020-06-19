@@ -10,11 +10,5 @@
         "name": "Daniel",
         "weeklyReadingGoal": 210,
         "totalMinutesRead": 3000
-    },
-    {
-        "readerID": 3,
-        "name": "Lanier",
-        "weeklyReadingGoal": 140,
-        "totalMinutesRead": 600
     }
 ]
